@@ -88,7 +88,6 @@
             android:textColor="#0000ff"
             android:onClick="@{()->vm.goToRegister()}"
             android:clickable="true"
-            android:textSize="18sp"
             app:layout_constraintBottom_toBottomOf="@id/newUser_textView"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@id/newUser_textView"
