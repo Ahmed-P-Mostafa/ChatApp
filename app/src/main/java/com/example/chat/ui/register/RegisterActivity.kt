@@ -1,7 +1,6 @@
 package com.example.chat.ui.register
 
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Toast
 import androidx.lifecycle.Observer
@@ -11,9 +10,8 @@ import com.example.chat.base.BaseActivity
 import com.example.chat.databinding.ActivityRegisterBinding
 import com.example.chat.ui.home.HomeActivity
 import com.example.chat.ui.login.LoginActivity
-import com.example.chat.ui.login.Navigator
 
-class RegisterActivity : BaseActivity<ActivityRegisterBinding,RegisterViewMdel>(),com.example.chat.ui.register.Navigator {
+class RegisterActivity : BaseActivity<ActivityRegisterBinding,RegisterViewModel>(),com.example.chat.ui.register.Navigator {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         dataBinding.vm = viewModel
@@ -36,8 +34,8 @@ class RegisterActivity : BaseActivity<ActivityRegisterBinding,RegisterViewMdel>(
         return R.layout.activity_register
     }
 
-    override fun initializeViewModel(): RegisterViewMdel {
-        return ViewModelProvider(this).get(RegisterViewMdel::class.java)
+    override fun initializeViewModel(): RegisterViewModel {
+        return ViewModelProvider(this).get(RegisterViewModel::class.java)
     }
 
     override fun openLoginActivity() {

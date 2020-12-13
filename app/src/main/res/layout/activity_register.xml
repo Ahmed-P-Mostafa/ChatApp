@@ -7,7 +7,7 @@
         <import type="android.view.View"/>
         <variable
             name="vm"
-            type="com.example.chat.ui.register.RegisterViewMdel" />
+            type="com.example.chat.ui.register.RegisterViewModel" />
 
     </data>
 
