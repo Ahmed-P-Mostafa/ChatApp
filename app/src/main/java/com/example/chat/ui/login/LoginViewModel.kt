@@ -17,6 +17,7 @@ class LoginViewModel:BaseViewModel<Navigator>() {
     val auth = FirebaseAuth.getInstance()
     var isSignedLiveData =  MutableLiveData<Boolean>()
 
+
      var email = MutableStateFlow("")
      var password = MutableStateFlow("")
 
@@ -27,18 +28,23 @@ class LoginViewModel:BaseViewModel<Navigator>() {
         isSignedLiveData.value = auth.currentUser != null
     }
     fun logIn(){
+        loader.postValue(true)
+
         Log.d(TAG, "logIn: ")
 
         auth.signInWithEmailAndPassword(email.value.toString(),password.value.toString()).addOnCompleteListener(
             OnCompleteListener {
+                loader.postValue(false)
                 if (it.isSuccessful) {
                     Log.d(TAG, "logIn: login is successful")
                     val user: FirebaseUser? = auth.currentUser
                     Log.d(TAG, "logIn: ${user?.email}")
                     // update UI
+                    message.postValue("login successful")
                 } else {
                     Log.d(TAG, "logIn: login failure ${it.exception}")
                     // update Ui
+                    message.postValue("login failure")
                 }
 
             })
