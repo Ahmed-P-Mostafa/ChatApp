@@ -4,28 +4,30 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
+        <import type="android.view.View"/>
         <variable
             name="vm"
-            type="com.example.chat.ui.register.RegisterViewMdel" />
+            type="com.example.chat.ui.register.RegisterViewModel" />
 
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".ui.register.RegisterActivity"
         android:padding="12dp"
-        >
+        tools:context=".ui.register.RegisterActivity">
+
         <EditText
             android:id="@+id/name_editText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="@string/name"
-            android:text="@={vm.name}"
             android:inputType="textPersonName"
+            android:text="@={vm.name}"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_chainStyle="packed"/>
+            app:layout_constraintVertical_chainStyle="packed" />
+
         <EditText
             android:id="@+id/phone_editText"
             android:layout_width="match_parent"
@@ -34,33 +36,61 @@
             android:inputType="phone"
             android:text="@={vm.phone}"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/name_editText"/>
+            app:layout_constraintTop_toBottomOf="@id/name_editText" />
+
         <EditText
             android:id="@+id/email_editText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="@string/email"
-            android:text="@={vm.email}"
             android:inputType="textEmailAddress"
+            android:text="@={vm.email}"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/phone_editText"/>
+            app:layout_constraintTop_toBottomOf="@id/phone_editText" />
+
         <EditText
             android:id="@+id/password_editText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="@string/password"
-            android:text="@={vm.password}"
             android:inputType="textPassword"
+            android:text="@={vm.password}"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/email_editText"/>
+            app:layout_constraintTop_toBottomOf="@id/email_editText" />
+
         <Button
             android:id="@+id/signUp_Button"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/password_editText"
             android:onClick="@{()->vm.signUp()}"
-            android:text="@string/sign_up"/>
+            android:text="@string/sign_up"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/password_editText" />
+
+        <TextView
+            android:id="@+id/haveAccount"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/have_account"
+
+            app:layout_constraintEnd_toStartOf="@id/login_textView"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintHorizontal_chainStyle="packed"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/signUp_Button"
+            app:layout_constraintVertical_chainStyle="packed" />
+
+        <TextView
+            android:id="@+id/login_textView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/login"
+            android:textColor="@color/colorPrimaryDark"
+            android:onClick="@{()->vm.logIn()}"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toEndOf="@id/haveAccount"
+            app:layout_constraintTop_toTopOf="@+id/haveAccount" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

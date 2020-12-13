@@ -1,5 +1,6 @@
 package com.example.chat.ui.login
 
+import android.content.DialogInterface
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
@@ -25,6 +26,7 @@ class LoginActivity : BaseActivity<ActivityLoginBinding, LoginViewModel>(),Navig
         viewModel.navigator = this
         isUserLogedIn()
         dataBinding.vm = viewModel
+
 
         dataBinding.userNameEditText.addTextChangedListener{
             viewModel.setEmail(it.toString())
@@ -73,10 +75,10 @@ class LoginActivity : BaseActivity<ActivityLoginBinding, LoginViewModel>(),Navig
     }
 
     override fun openRegister() {
-
         val registerIntent = Intent(this,RegisterActivity::class.java)
         startActivity(registerIntent)
 
     }
+
 
 }
