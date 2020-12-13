@@ -59,13 +59,17 @@ class RegisterViewModel :BaseViewModel<Navigator>() {
     }
     fun signUp(){
         if (isValidData()){
+            loader.postValue(true)
             mAuth.createUserWithEmailAndPassword(email.get().toString(),password.get().toString())
                 .addOnCompleteListener {
+                    loader.postValue(false)
                     Log.d(TAG, "signUp: ")
                     if (it.isSuccessful){
+                        message.postValue("Register Successful")
                         val user = mAuth.currentUser
                         Log.d(TAG, "signUp: create user successful"+{user?.email})
                     }else{
+                        message.postValue("Register Failure")
                         Log.d(TAG, "signUp: create user unsuccessful")
                         Log.d(TAG, "signUp: "+it.exception?.localizedMessage)
                     }
