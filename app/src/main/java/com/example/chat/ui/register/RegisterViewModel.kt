@@ -1,11 +1,18 @@
 package com.example.chat.ui.register
 
+import android.util.Log
 import android.util.Patterns
+import android.widget.Toast
 import androidx.databinding.ObservableField
 import androidx.lifecycle.MutableLiveData
 import com.example.chat.base.BaseViewModel
+import com.google.android.gms.tasks.OnCompleteListener
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.ktx.Firebase
 
-class RegisterViewMdel :BaseViewModel<Navigator>() {
+class RegisterViewModel :BaseViewModel<Navigator>() {
+    val mAuth :FirebaseAuth = FirebaseAuth.getInstance()
+    private val TAG = "RegisterViewModel"
 
 
      val name = ObservableField<String>()
@@ -52,7 +59,19 @@ class RegisterViewMdel :BaseViewModel<Navigator>() {
     }
     fun signUp(){
         if (isValidData()){
-            navigator?.openHomeActivity()
+            mAuth.createUserWithEmailAndPassword(email.get().toString(),password.get().toString())
+                .addOnCompleteListener {
+                    Log.d(TAG, "signUp: ")
+                    if (it.isSuccessful){
+                        val user = mAuth.currentUser
+                        Log.d(TAG, "signUp: create user successful"+{user?.email})
+                    }else{
+                        Log.d(TAG, "signUp: create user unsuccessful")
+                        Log.d(TAG, "signUp: "+it.exception?.localizedMessage)
+                    }
+                }
+
+            //navigator?.openHomeActivity()
         }
     }
     fun logIn(){
