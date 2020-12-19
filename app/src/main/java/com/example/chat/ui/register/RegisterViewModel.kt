@@ -6,7 +6,7 @@ import android.util.Patterns
 import androidx.databinding.ObservableField
 import androidx.lifecycle.MutableLiveData
 import com.example.chat.base.BaseViewModel
-import com.example.chat.base.CustomMessage
+import com.example.chat.util.CustomMessage
 import com.google.firebase.auth.FirebaseAuth
 
 class RegisterViewModel :BaseViewModel<Navigator>() {
