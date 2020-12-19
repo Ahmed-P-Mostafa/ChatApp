@@ -18,7 +18,7 @@ import kotlinx.coroutines.flow.combine
 class LoginViewModel:BaseViewModel<Navigator>() {
     private val TAG = "fireBase LoginViewModel"
 
-    val auth = FirebaseAuth.getInstance()
+
 
     var isSignedLiveData =  MutableLiveData<Boolean>()
 

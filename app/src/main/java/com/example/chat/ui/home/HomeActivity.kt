@@ -15,6 +15,7 @@ class HomeActivity : BaseActivity<ActivityHomeBinding, HomeActivityViewModel>(),
         viewModel.navigator = this
         dataBinding.vm = viewModel
 
+
     }
 
     override fun getLayoutId(): Int {

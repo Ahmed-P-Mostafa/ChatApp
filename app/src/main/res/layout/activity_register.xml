@@ -18,14 +18,24 @@
         tools:context=".ui.register.RegisterActivity">
 
         <EditText
-            android:id="@+id/name_editText"
+            android:id="@+id/firstName_editText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="@string/name"
+            android:hint="@string/first_name"
             android:inputType="textPersonName"
-            android:text="@={vm.name}"
+            android:text="@={vm.firstName}"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_chainStyle="packed" />
+        <EditText
+            android:id="@+id/lastName_editText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/last_name"
+            android:inputType="textPersonName"
+            android:text="@={vm.lastName}"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/firstName_editText"
             app:layout_constraintVertical_chainStyle="packed" />
 
         <EditText
@@ -36,7 +46,7 @@
             android:inputType="phone"
             android:text="@={vm.phone}"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/name_editText" />
+            app:layout_constraintTop_toBottomOf="@id/lastName_editText" />
 
         <EditText
             android:id="@+id/email_editText"

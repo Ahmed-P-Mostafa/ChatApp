@@ -9,7 +9,7 @@ import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
 import androidx.lifecycle.Observer
 
-abstract class BaseActivity<DB:ViewDataBinding,VM:BaseViewModel<*>> :AppCompatActivity() {
+abstract class BaseActivity<DB:ViewDataBinding,VM:BaseViewModel<*>> :MyApplication() {
 
     lateinit var dataBinding: DB
     lateinit var viewModel:VM
