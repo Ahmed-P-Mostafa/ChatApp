@@ -8,6 +8,8 @@ import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
 
 open class BaseViewModel<N>:ViewModel() {
+    val auth = FirebaseAuth.getInstance()
+
     var navigator :N? = null
     var dialog = MutableLiveData<CustomMessage>()
     var loader = MutableLiveData<Boolean>()

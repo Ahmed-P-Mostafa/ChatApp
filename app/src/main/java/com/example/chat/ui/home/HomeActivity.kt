@@ -23,6 +23,7 @@ class HomeActivity : BaseActivity<ActivityHomeBinding, HomeActivityViewModel>(),
        
         dataBinding.chatsRecyclerView.adapter = adapter
 
+
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {

@@ -17,6 +17,7 @@ import kotlinx.coroutines.flow.combine
 class LoginViewModel:BaseViewModel<Navigator>() {
     private val TAG = "fireBase LoginViewModel"
 
+
     var isUserLoggedIn = MutableLiveData<Boolean>()
     private val webClientId = "611522890597-e6dc2r9ld6s6vj014pn36camn5aoil3l.apps.googleusercontent.com"
     private val webClientSecret = "7hDV_hLKjDHwUXSiQJ59-Gav"

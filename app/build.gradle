@@ -77,5 +77,8 @@ dependencies {
     //circular Image
     implementation 'de.hdodenhof:circleimageview:3.1.0'
 
+    //fire store
+    implementation 'com.google.firebase:firebase-firestore-ktx'
+
 
 }
