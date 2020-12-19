@@ -1,11 +1,10 @@
 package com.example.chat.ui.login
 
-import android.content.DialogInterface
 import android.util.Log
 import android.util.Patterns
 import androidx.lifecycle.MutableLiveData
 import com.example.chat.base.BaseViewModel
-import com.example.chat.base.CustomMessage
+import com.example.chat.util.CustomMessage
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.android.gms.tasks.OnCompleteListener
 import com.google.firebase.auth.FirebaseAuth
@@ -18,9 +17,6 @@ import kotlinx.coroutines.flow.combine
 class LoginViewModel:BaseViewModel<Navigator>() {
     private val TAG = "fireBase LoginViewModel"
 
-
-
-    var isSignedLiveData =  MutableLiveData<Boolean>()
 
     var isUserLoggedIn = MutableLiveData<Boolean>()
     private val webClientId = "611522890597-e6dc2r9ld6s6vj014pn36camn5aoil3l.apps.googleusercontent.com"
@@ -71,10 +67,7 @@ class LoginViewModel:BaseViewModel<Navigator>() {
             })
 
     }
-    fun logOut(){
-        auth.signOut()
-        message.value = auth.currentUser?.email
-    }
+
 
     fun setEmail(email:String){
 

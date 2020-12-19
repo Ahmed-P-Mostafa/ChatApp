@@ -9,7 +9,13 @@ import com.google.android.gms.tasks.OnSuccessListener
 import com.google.firebase.firestore.DocumentReference
 
 class HomeActivityViewModel:BaseViewModel<Navigator>() {
+
     fun createNewGroup(group:Group,onCompleteListener: OnCompleteListener<DocumentReference>){
         GroupDao.addGroupToDatabase(group,onCompleteListener)
+
+    fun logOut(){
+        auth.signOut()
+        message.value = auth.currentUser?.email
+
     }
 }
