@@ -6,8 +6,9 @@ import com.google.firebase.auth.FirebaseAuth
 
 open class BaseViewModel<N>:ViewModel() {
     var navigator :N? = null
-    var message = MutableLiveData<String>()
+    var dialog = MutableLiveData<CustomMessage>()
     var loader = MutableLiveData<Boolean>()
+    val message = MutableLiveData<String>()
 
 
 

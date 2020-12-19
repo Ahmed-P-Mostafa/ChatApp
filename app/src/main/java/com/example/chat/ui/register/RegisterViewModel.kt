@@ -1,14 +1,13 @@
 package com.example.chat.ui.register
 
+import android.content.DialogInterface
 import android.util.Log
 import android.util.Patterns
-import android.widget.Toast
 import androidx.databinding.ObservableField
 import androidx.lifecycle.MutableLiveData
 import com.example.chat.base.BaseViewModel
-import com.google.android.gms.tasks.OnCompleteListener
+import com.example.chat.base.CustomMessage
 import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.ktx.Firebase
 
 class RegisterViewModel :BaseViewModel<Navigator>() {
     val mAuth :FirebaseAuth = FirebaseAuth.getInstance()
@@ -65,11 +64,15 @@ class RegisterViewModel :BaseViewModel<Navigator>() {
                     loader.postValue(false)
                     Log.d(TAG, "signUp: ")
                     if (it.isSuccessful){
-                        message.postValue("Register Successful")
+                        dialog.value = CustomMessage(message = "Register Successful",posButton = "ok",posAction = DialogInterface.OnClickListener { dialogInterface, i ->
+                            navigator?.openHomeActivity()
+                        })
                         val user = mAuth.currentUser
                         Log.d(TAG, "signUp: create user successful"+{user?.email})
                     }else{
-                        message.postValue("Register Failure")
+                        dialog.value = CustomMessage(message = "Register Successful",posButton = "ok",posAction = DialogInterface.OnClickListener { dialogInterface, i ->
+                            dialogInterface.dismiss()
+                        })
                         Log.d(TAG, "signUp: create user unsuccessful")
                         Log.d(TAG, "signUp: "+it.exception?.localizedMessage)
                     }
