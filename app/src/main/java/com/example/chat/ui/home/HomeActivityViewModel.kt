@@ -15,7 +15,7 @@ class HomeActivityViewModel:BaseViewModel<Navigator>() {
     }
     fun logOut() {
         auth.signOut()
-        message.value = auth.currentUser?.email
+        navigator?.openLogin()
 
     }
 }
