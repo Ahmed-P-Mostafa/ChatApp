@@ -1,29 +1,48 @@
 package com.example.chat.ui.home
 
+import android.app.AlertDialog
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuInflater
 import android.view.MenuItem
 import android.widget.Toast
-import androidx.lifecycle.ViewModel
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.example.chat.R
 import com.example.chat.adapters.ChatsAdapter
 import com.example.chat.base.BaseActivity
 import com.example.chat.databinding.ActivityHomeBinding
 import com.example.chat.ui.login.LoginActivity
-import java.net.NoRouteToHostException
+import com.example.chat.ui.new_group_dialog.DialogViewModel
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
+import com.google.android.material.dialog.MaterialDialogs
 
 class HomeActivity : BaseActivity<ActivityHomeBinding, HomeActivityViewModel>(),Navigator {
-    var adapter = ChatsAdapter()
+    lateinit var adapter :ChatsAdapter
+    var newGroupDialog : AlertDialog?=null
+    val newGroupDialogViewModel = DialogViewModel()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         viewModel.navigator = this
-        dataBinding.vm = viewModel
-       
-        dataBinding.chatsRecyclerView.adapter = adapter
+        val list = listOf<ChatModel>()
+        adapter = ChatsAdapter(list)
+
+
+        newGroupDialogViewModel.cancelClicked.observe(this, Observer {
+            newGroupDialog?.dismiss()
+        })
+        newGroupDialogViewModel.saveClicked.observe(this, Observer {
+            newGroupDialog?.dismiss()
+
+        })
+        dataBinding.apply {
+
+            vm = viewModel
+            chatsRecyclerView.adapter = adapter
+        }
+
+
 
 
     }
@@ -45,13 +64,14 @@ class HomeActivity : BaseActivity<ActivityHomeBinding, HomeActivityViewModel>(),
     }
 
     fun settings(item: MenuItem) {
-        Toast.makeText(this,"settings",Toast.LENGTH_LONG).show()
+
     }
     fun newChat(item: MenuItem){
         Toast.makeText(this,"new Chat",Toast.LENGTH_LONG).show()
     }
     fun newGroup(item: MenuItem){
-        Toast.makeText(this,"new group",Toast.LENGTH_LONG).show()
+        newGroupDialog = AlertDialog.Builder(this).setView(layoutInflater.inflate(R.layout.new_group_dialog,null)).show()
+
     }
     fun logout(item: MenuItem){
         viewModel.logOut()

@@ -16,4 +16,8 @@
     <string name="new_group">New group</string>
     <string name="new_chat">New chat</string>
     <string name="log_out">Log out</string>
+    <string name="name">Name</string>
+    <string name="description">Description</string>
+    <string name="save">Save</string>
+    <string name="cancel">Cancel</string>
 </resources>
