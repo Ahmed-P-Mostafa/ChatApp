@@ -8,6 +8,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.chat.R
 import com.example.chat.databinding.ActivityHomeBinding
 import com.example.chat.databinding.ChatItemBinding
+import com.example.chat.ui.chat.MessageModel
 import com.example.chat.ui.home.ChatModel
 
 class ChatsAdapter(var list:List<ChatModel>?=null):RecyclerView.Adapter<ChatsAdapter.ViewHolder>() {
@@ -30,7 +31,7 @@ class ChatsAdapter(var list:List<ChatModel>?=null):RecyclerView.Adapter<ChatsAda
     }
     class ViewHolder(val binding: ChatItemBinding):RecyclerView.ViewHolder(binding.root){
         fun bind(chatModel: ChatModel){
-            binding.chat = chatModel
+            binding.chat = MessageModel()
             binding.executePendingBindings()
         }
 

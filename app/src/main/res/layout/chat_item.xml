@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
+        <import type="android.view.View"/>
         <variable
             name="chat"
             type="com.example.chat.ui.chat.MessageModel" />
@@ -48,7 +49,7 @@
             tools:text="Are you still home"
             android:textColor="#4E4E4E"
             android:maxLines="1"
-            android:text="@{chat.lastMessage}"
+            android:text="@{chat.lastMessageText}"
 
             />
         <TextView
@@ -59,7 +60,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintBottom_toTopOf="@id/lastMessageCount_textView"
             tools:text="09:30"
-            android:text="@{chat.lastTime}"
+            android:text="@{chat.lastMessageTime}"
             />
 
         <TextView
@@ -69,7 +70,7 @@
             app:layout_constraintTop_toBottomOf="@id/lastMessageDate_textView"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintBottom_toBottomOf="@id/profile_image"
-            tools:text="15"
+            tools:text="@{chat.lastMessageCount}"
             android:textColor="@android:color/white"
             android:background="@drawable/last_message_count_background"
             android:gravity="center"

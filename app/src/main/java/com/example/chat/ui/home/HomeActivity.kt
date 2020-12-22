@@ -70,7 +70,7 @@ class HomeActivity : BaseActivity<ActivityHomeBinding, HomeActivityViewModel>(),
 
     }
     fun newChat(item: MenuItem){
-        openChat()
+        viewModel.goToChat()
     }
     fun newGroup(item: MenuItem){
         newGroupDialog = AlertDialog.Builder(this).setView(layoutInflater.inflate(R.layout.new_group_dialog,null)).show()
@@ -78,7 +78,7 @@ class HomeActivity : BaseActivity<ActivityHomeBinding, HomeActivityViewModel>(),
     }
     fun logout(item: MenuItem){
         viewModel.logOut()
-        openLogin()
+
     }
 
     override fun openLogin() {

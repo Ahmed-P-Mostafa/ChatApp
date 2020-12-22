@@ -56,7 +56,9 @@ class HomeActivityViewModel:BaseViewModel<Navigator>() {
 
     fun isValidData(): Boolean {
         return (!name.value.isNullOrBlank() && !desc.get().isNullOrBlank())
-}
-   fun goToChat(){
+    }
+
+    fun goToChat() {
         navigator?.openChat()
- }
+    }
+}
