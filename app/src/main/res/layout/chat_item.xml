@@ -6,7 +6,7 @@
     <data>
         <variable
             name="chat"
-            type="" />
+            type="com.example.chat.ui.chat.MessageModel" />
 
     </data>
 
@@ -19,6 +19,7 @@
             android:id="@+id/profile_image"
             android:layout_width="96dp"
             android:layout_height="96dp"
+            android:src="@{chat.pictureUrl}"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintEnd_toStartOf="@id/profile_name"/>
