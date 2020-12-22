@@ -35,7 +35,7 @@ class ChatsAdapter(var list:List<ChatModel>?=null):RecyclerView.Adapter<ChatsAda
         }
 
     }
-    /*class ChatAdapterDiffUtill:DiffUtil.ItemCallback<ChatModel>(){
+    class ChatAdapterDiffUtill:DiffUtil.ItemCallback<ChatModel>(){
         override fun areItemsTheSame(oldItem: ChatModel, newItem: ChatModel): Boolean {
             return oldItem.name == newItem.name
         }
@@ -43,5 +43,5 @@ class ChatsAdapter(var list:List<ChatModel>?=null):RecyclerView.Adapter<ChatsAda
         override fun areContentsTheSame(oldItem: ChatModel, newItem: ChatModel): Boolean {
             return newItem.equals(oldItem)
         }
-    }*/
+    }
 }
