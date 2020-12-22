@@ -6,8 +6,7 @@
     <data>
         <variable
             name="chat"
-            type="com.example.chat.ui.home.ChatModel" />
-
+            type="com.example.chat.ui.chat.MessageModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -19,6 +18,8 @@
             android:id="@+id/profile_image"
             android:layout_width="96dp"
             android:layout_height="96dp"
+
+            android:src="@{chat.pictureUrl}"
 
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
