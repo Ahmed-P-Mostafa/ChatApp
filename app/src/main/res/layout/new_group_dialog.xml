@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <data>
+        <variable
+            name="vm"
+            type="com.example.chat.ui.home.HomeActivityViewModel" />
+
+    </data>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="12dp">
+        <ImageView
+            android:id="@+id/roomPicture_imageView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_camera_24"
+            android:background="@drawable/round_shape"
+            android:scaleType="center" />
+        <EditText
+            android:id="@+id/roomName_textView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="24sp"
+            android:hint="@string/name"
+            android:text="@{vm.name}"
+            android:padding="2dp"
+            android:layout_marginTop="4dp"/>
+        <EditText
+            android:id="@+id/roomDesc_textView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="20sp"
+            android:hint="@string/description"
+            android:text="@{vm.desc}"
+            android:padding="2dp"
+            android:layout_marginTop="4dp"/>
+        <Button
+            android:id="@+id/save_button"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/save"
+            android:onClick="@{()->vm.save()}"/>
+        <Button
+            android:id="@+id/cancel_button"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/cancel"
+            android:onClick="@{()->vm.cancel()}"/>
+
+
+    </LinearLayout>
+</layout>

@@ -48,8 +48,8 @@ class RegisterActivity : BaseActivity<ActivityRegisterBinding,RegisterViewModel>
         startActivity(homeIntent)
     }
     fun observers(){
-        viewModel.nameText.observe(this, Observer {
-            if (it== false){dataBinding.nameEditText.setError("name is empty")
+        viewModel.firstNameText.observe(this, Observer {
+            if (it== false){dataBinding.firstNameEditText.setError("name is empty")
             }
         })
         viewModel.emailText.observe(this, Observer {

@@ -1,37 +1,49 @@
 package com.example.chat.ui.register
 
+import android.content.DialogInterface
 import android.util.Log
 import android.util.Patterns
-import android.widget.Toast
 import androidx.databinding.ObservableField
 import androidx.lifecycle.MutableLiveData
 import com.example.chat.base.BaseViewModel
+import com.example.chat.onlineDatabase.user.User
+import com.example.chat.onlineDatabase.user.UserDao
 import com.google.android.gms.tasks.OnCompleteListener
+import com.google.android.gms.tasks.OnSuccessListener
+import com.example.chat.util.CustomMessage
 import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.ktx.Firebase
+
 
 class RegisterViewModel :BaseViewModel<Navigator>() {
-    val mAuth :FirebaseAuth = FirebaseAuth.getInstance()
+
     private val TAG = "RegisterViewModel"
 
 
-     val name = ObservableField<String>()
+     val firstName = ObservableField<String>()
+     val lastName = ObservableField<String>()
      val phone = ObservableField<String>()
      val email = ObservableField<String>()
      val password = ObservableField<String>()
 
-    val nameText = MutableLiveData<Boolean>()
+    val firstNameText = MutableLiveData<Boolean>()
+    val lastNameText = MutableLiveData<Boolean>()
     val phoneText = MutableLiveData<Boolean>()
     val emailText = MutableLiveData<Boolean>()
     val passwordText = MutableLiveData<Boolean>()
-    var dataValid = MutableLiveData<Boolean>(false)
+    var dataValid = MutableLiveData(false)
 
     fun isValidData():Boolean{
-        if(name.get().isNullOrBlank()) {
-            nameText.postValue(false)
+        if(firstName.get().isNullOrBlank()) {
+            firstNameText.postValue(false)
         }
         else{
-           nameText.postValue(true)
+           firstNameText.postValue(true)
+        }
+        if(lastName.get().isNullOrBlank()) {
+            lastNameText.postValue(false)
+        }
+        else{
+           lastNameText.postValue(true)
         }
         if (phone.get().isNullOrBlank()){
             phoneText.postValue(false)
@@ -50,7 +62,7 @@ class RegisterViewModel :BaseViewModel<Navigator>() {
         }else{
             passwordText.postValue(true)
         }
-        if (name.get().isNullOrBlank()||phone.get().isNullOrBlank()||
+        if (firstName.get().isNullOrBlank()||lastName.get().isNullOrBlank()||phone.get().isNullOrBlank()||
             email.get().isNullOrBlank()||password.get().isNullOrBlank()||
             !Patterns.EMAIL_ADDRESS.matcher(email.get().toString()).matches()){
             return false
@@ -60,26 +72,51 @@ class RegisterViewModel :BaseViewModel<Navigator>() {
     fun signUp(){
         if (isValidData()){
             loader.postValue(true)
-            mAuth.createUserWithEmailAndPassword(email.get().toString(),password.get().toString())
-                .addOnCompleteListener {
+            auth.createUserWithEmailAndPassword(email.get().toString(),password.get().toString())
+                .addOnCompleteListener {authTask->
                     loader.postValue(false)
                     Log.d(TAG, "signUp: ")
-                    if (it.isSuccessful){
-                        message.postValue("Register Successful")
-                        val user = mAuth.currentUser
-                        Log.d(TAG, "signUp: create user successful"+{user?.email})
+                    if (authTask.isSuccessful){
+
+                        val user = auth.currentUser
+                        addUSerToDatabase(user = User(
+                            user?.uid!!,
+                            first = firstName.get()!!,
+                            last = lastName.get()!!,
+                            email = email.get()!!,
+                            phone = phone.get()!!
+                        ),
+                            OnCompleteListener {addUserTask->
+                                if (addUserTask.isSuccessful){
+                                    Log.d(TAG, "signUp: addUSerToDatabase, OnSuccessListener")
+                                    dialog.value = CustomMessage(
+                                        message = "add to Database Successful",
+                                        posButton = "ok",
+                                        posAction = DialogInterface.OnClickListener { dialogInterface, i ->
+                                            navigator?.openHomeActivity()
+                                        })
+
+                                }else{
+                                    message.value = addUserTask.exception?.localizedMessage
+                                }
+
+                            })
+                        Log.d(TAG, "signUp: create user successful"+{user.email})
                     }else{
-                        message.postValue("Register Failure")
+                        dialog.value = CustomMessage(message = authTask.exception?.localizedMessage!!,posButton = "ok",posAction = DialogInterface.OnClickListener { dialogInterface, i ->
+                            dialogInterface.dismiss()
+                        })
                         Log.d(TAG, "signUp: create user unsuccessful")
-                        Log.d(TAG, "signUp: "+it.exception?.localizedMessage)
+                        Log.d(TAG, "signUp: "+authTask.exception?.localizedMessage)
                     }
                 }
-
-            //navigator?.openHomeActivity()
         }
     }
     fun logIn(){
         navigator?.openLoginActivity()
 
+    }
+    fun addUSerToDatabase(user:User,onCompleteListener: OnCompleteListener<Void>){
+        UserDao.addUserToDatabse(user,onCompleteListener)
     }
 }

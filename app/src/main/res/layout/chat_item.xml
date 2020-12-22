@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+        <import type="android.view.View"/>
+        <variable
+            name="chat"
+            type="com.example.chat.ui.chat.MessageModel" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="8dp">
+        <de.hdodenhof.circleimageview.CircleImageView
+            xmlns:app="http://schemas.android.com/apk/res-auto"
+            android:id="@+id/profile_image"
+            android:layout_width="96dp"
+            android:layout_height="96dp"
+
+            android:src="@{chat.pictureUrl}"
+
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/profile_name"/>
+        <TextView
+            android:id="@+id/profile_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintStart_toEndOf="@id/profile_image"
+            app:layout_constraintTop_toTopOf="@id/profile_image"
+            app:layout_constraintBottom_toTopOf="@id/lastMessage_textView"
+            android:layout_marginStart="4dp"
+            tools:text="Ahmed Mostafa"
+            android:text="@{chat.name}"
+            android:maxLines="1"
+            android:textSize="20sp"
+            android:textColor="@android:color/black"
+            />
+        <TextView
+            android:id="@+id/lastMessage_textView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintStart_toStartOf="@id/profile_name"
+            app:layout_constraintTop_toBottomOf="@id/profile_name"
+            app:layout_constraintBottom_toBottomOf="@id/profile_image"
+            tools:text="Are you still home"
+            android:textColor="#4E4E4E"
+            android:maxLines="1"
+            android:text="@{chat.lastMessageText}"
+
+            />
+        <TextView
+            android:id="@+id/lastMessageDate_textView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toTopOf="@id/profile_image"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBottom_toTopOf="@id/lastMessageCount_textView"
+            tools:text="09:30"
+            android:text="@{chat.lastMessageTime}"
+            />
+
+        <TextView
+            android:id="@+id/lastMessageCount_textView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@id/lastMessageDate_textView"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBottom_toBottomOf="@id/profile_image"
+            tools:text="@{chat.lastMessageCount}"
+            android:textColor="@android:color/white"
+            android:background="@drawable/last_message_count_background"
+            android:gravity="center"
+            />
+        <ImageView
+            android:id="@+id/seenStatus_imageView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBottom_toBottomOf="@id/profile_image"
+            app:layout_constraintTop_toBottomOf="@id/lastMessageDate_textView"/>
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

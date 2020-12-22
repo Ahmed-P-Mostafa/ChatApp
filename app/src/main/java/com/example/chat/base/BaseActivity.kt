@@ -1,6 +1,5 @@
 package com.example.chat.base
 
-import android.Manifest
 import android.app.ProgressDialog
 import android.content.DialogInterface
 import android.os.Bundle
@@ -9,25 +8,23 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModel
-import com.example.chat.ui.login.LoginViewModel
 
-abstract class BaseActivity<DB:ViewDataBinding,VM:BaseViewModel<*>> :AppCompatActivity() {
+abstract class BaseActivity<DB:ViewDataBinding,VM:BaseViewModel<*>> :MyApplication() {
 
     lateinit var dataBinding: DB
     lateinit var viewModel:VM
     var dialog : AlertDialog? = null
     var loader :ProgressDialog? = null
+    var message:AlertDialog? = null
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
         dataBinding = DataBindingUtil.setContentView(this,getLayoutId())
         viewModel = initializeViewModel()
 
-        viewModel.message.observe(this, Observer {
-            showMessage(message = it,posButton = "ok",posAction = DialogInterface.OnClickListener { dialogInterface, i ->
-                dialogInterface.dismiss()
-            })
+        viewModel.dialog.observe(this, Observer {
+            showDialog(title = it.title,message = it.message,posButton = it.posButton ,posAction = it.posAction,negButton = it
+                .negButton,negAction = it.negAction,cancelable = it.cancelable)
         })
         viewModel.loader.observe(this, Observer {
             if (it){
@@ -36,6 +33,9 @@ abstract class BaseActivity<DB:ViewDataBinding,VM:BaseViewModel<*>> :AppCompatAc
                 hideLoader()
             }
         })
+        viewModel.message.observe(this, Observer {
+            showMessage(it)
+        })
 
 
 
@@ -43,9 +43,9 @@ abstract class BaseActivity<DB:ViewDataBinding,VM:BaseViewModel<*>> :AppCompatAc
     abstract fun getLayoutId():Int
     abstract fun initializeViewModel():VM
 
-    fun showMessage(title :String? = null,message :String? = null,posButton :String? = null,
-                    negButton :String? = null,posAction:DialogInterface.OnClickListener?= null
-                    ,negAction:DialogInterface.OnClickListener?= null,cancelable:Boolean=false){
+    fun showDialog(title :String? = null, message :String? = null, posButton :String? = null,
+                   negButton :String? = null, posAction:DialogInterface.OnClickListener?= null
+                   , negAction:DialogInterface.OnClickListener?= null, cancelable:Boolean=false){
 
             dialog = AlertDialog.Builder(this)
                 .setTitle(title)
@@ -54,6 +54,13 @@ abstract class BaseActivity<DB:ViewDataBinding,VM:BaseViewModel<*>> :AppCompatAc
                 .setNegativeButton(negButton,negAction)
                 .setCancelable(cancelable)
                 .show()
+    }
+    fun showMessage(textt: String?){
+        message = AlertDialog.Builder(this)
+            .setMessage(textt)
+            .setPositiveButton("ok") { dialogInterface, i ->
+                dialogInterface.dismiss()
+            }.show()
     }
     fun hideMessage(){
         dialog?.dismiss()
