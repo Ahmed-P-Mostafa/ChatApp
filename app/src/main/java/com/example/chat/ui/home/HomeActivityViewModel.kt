@@ -18,4 +18,7 @@ class HomeActivityViewModel:BaseViewModel<Navigator>() {
         navigator?.openLogin()
 
     }
+    fun goToChat(){
+        navigator?.openChat()
+    }
 }

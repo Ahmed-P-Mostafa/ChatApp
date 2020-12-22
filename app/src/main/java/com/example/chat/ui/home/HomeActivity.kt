@@ -13,6 +13,7 @@ import com.example.chat.R
 import com.example.chat.adapters.ChatsAdapter
 import com.example.chat.base.BaseActivity
 import com.example.chat.databinding.ActivityHomeBinding
+import com.example.chat.ui.chat.ChatActivity
 import com.example.chat.ui.login.LoginActivity
 import java.net.NoRouteToHostException
 
@@ -48,7 +49,7 @@ class HomeActivity : BaseActivity<ActivityHomeBinding, HomeActivityViewModel>(),
         Toast.makeText(this,"settings",Toast.LENGTH_LONG).show()
     }
     fun newChat(item: MenuItem){
-        Toast.makeText(this,"new Chat",Toast.LENGTH_LONG).show()
+        openChat()
     }
     fun newGroup(item: MenuItem){
         Toast.makeText(this,"new group",Toast.LENGTH_LONG).show()
@@ -61,5 +62,10 @@ class HomeActivity : BaseActivity<ActivityHomeBinding, HomeActivityViewModel>(),
     override fun openLogin() {
         val homeIntent=Intent(this,LoginActivity::class.java)
         startActivity(homeIntent)
+    }
+
+    override fun openChat() {
+        val chatIntent = Intent(this,ChatActivity::class.java)
+        startActivity(chatIntent)
     }
 }
