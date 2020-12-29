@@ -14,9 +14,12 @@ import com.example.chat.R
 import com.example.chat.adapters.ChatsAdapter
 import com.example.chat.base.BaseActivity
 import com.example.chat.databinding.ActivityHomeBinding
+import com.example.chat.ui.chatThread.ChatThreadActivity
 import com.example.chat.onlineDatabase.group.Group
 import com.example.chat.ui.chatThread.ChatThreadActivity
 import com.example.chat.ui.login.LoginActivity
+import com.example.chat.ui.newGroup.NewGroupActivity
+import com.example.chat.util.ChatModel
 import com.example.chat.ui.newGroup.NewGroupActivity
 import com.example.chat.util.ChatModel
 import com.example.chat.util.Constants
@@ -51,7 +54,7 @@ class HomeActivity : BaseActivity<ActivityHomeBinding, HomeActivityViewModel>(),
 
     }
     fun newGroup(item: MenuItem){
-      val intent = Intent(this,NewGroupActivity::class.java)
+      val intent = Intent(this, NewGroupActivity::class.java)
         startActivity(intent)
 
     }
@@ -98,7 +101,7 @@ class HomeActivity : BaseActivity<ActivityHomeBinding, HomeActivityViewModel>(),
     }
 
     override fun openThread(group:Group) {
-        val intent = Intent(this,ChatThreadActivity::class.java)
+        val intent = Intent(this, ChatThreadActivity::class.java)
         intent.putExtra(Constants.GROUP_EXTRA,group)
         startActivity(intent)
     }
