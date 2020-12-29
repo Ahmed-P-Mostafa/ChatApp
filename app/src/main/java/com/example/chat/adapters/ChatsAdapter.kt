@@ -1,47 +1,62 @@
 package com.example.chat.adapters
 
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import android.widget.AdapterView
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.example.chat.R
-import com.example.chat.databinding.ActivityHomeBinding
 import com.example.chat.databinding.ChatItemBinding
-import com.example.chat.ui.home.ChatModel
+import com.example.chat.databinding.GroupItemBinding
+import com.example.chat.onlineDatabase.group.Group
+import com.example.chat.util.ChatModel
 
-class ChatsAdapter(var list:List<ChatModel>?=null):RecyclerView.Adapter<ChatsAdapter.ViewHolder>() {
-
+class ChatsAdapter(var list:List<Group>?):RecyclerView.Adapter<ChatsAdapter.ViewHolder>() {
+    private val TAG = "ChatsAdapter"
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        val itemRoomBinding = DataBindingUtil.inflate<ChatItemBinding>(LayoutInflater.from(parent.context), R.layout.chat_item,parent,false)
+        val itemRoomBinding:GroupItemBinding  = DataBindingUtil.inflate(LayoutInflater.from(parent.context), R.layout.group_item,parent,false)
         return ViewHolder(itemRoomBinding)
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        holder.bind(list?.get(position)!!)
+        val item = list?.get(position)
+        holder.bind(list?.get(position))
+        holder.itemView.setOnClickListener {
+            if (item != null) {
+                onGroupClickListener?.onItemClick(position,item)
+            }
+        }
     }
 
-    override fun getItemCount(): Int = list!!.size
+    override fun getItemCount(): Int{
+        return list?.size?:0
+    }
 
-    fun changeData(list :List<ChatModel>){
+    fun changeData(list :List<Group>){
         this.list = list
         notifyDataSetChanged()
+        Log.d(TAG, "changeData: new list size : ${list.size} ")
     }
-    class ViewHolder(val binding: ChatItemBinding):RecyclerView.ViewHolder(binding.root){
-        fun bind(chatModel: ChatModel){
-            binding.chat = chatModel
-            binding.executePendingBindings()
+    class ViewHolder(private val binding:GroupItemBinding):RecyclerView.ViewHolder(binding.root){
+
+        fun bind(group: Group?){
+            Log.d("ChatsAdapter", "bind: ")
+            binding.group = group
+            binding.invalidateAll()
         }
 
     }
-    class ChatAdapterDiffUtill:DiffUtil.ItemCallback<ChatModel>(){
-        override fun areItemsTheSame(oldItem: ChatModel, newItem: ChatModel): Boolean {
-            return oldItem.name == newItem.name
-        }
-
-        override fun areContentsTheSame(oldItem: ChatModel, newItem: ChatModel): Boolean {
-            return newItem.equals(oldItem)
-        }
+    interface IOnItemClickListerner{
+        fun onItemClick(position:Int,group:Group){}
     }
+    var onGroupClickListener : IOnItemClickListerner?=null
+
+    fun onItemClickListener(listener:IOnItemClickListerner){
+        this.onGroupClickListener = listener
+    }
+
+
 }

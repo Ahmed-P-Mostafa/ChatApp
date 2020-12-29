@@ -5,48 +5,44 @@ import android.util.Patterns
 import android.widget.Toast
 import androidx.databinding.ObservableField
 import androidx.lifecycle.MutableLiveData
+import com.example.chat.adapters.ChatsAdapter
 import com.example.chat.base.BaseViewModel
 import com.example.chat.onlineDatabase.OnlineDatabase
 import com.example.chat.onlineDatabase.group.Group
 import com.example.chat.onlineDatabase.group.GroupDao
+import com.example.chat.util.ChatModel
 import com.google.android.gms.tasks.OnCompleteListener
+import com.google.android.gms.tasks.OnSuccessListener
 import com.google.firebase.firestore.DocumentReference
 
 class HomeActivityViewModel:BaseViewModel<Navigator>() {
     private val TAG = "HomeActivityViewModel"
-    val name = MutableLiveData<String>()
-    val desc = ObservableField<String>()
-    val cancelClicked = MutableLiveData(false)
-    fun save() {
-        Log.d(TAG, "save: ")
-        if (isValidData()) {
-            GroupDao.addGroupToDatabase(Group(
-                name = name.value.toString(),
-                desc = desc.get().toString()
-            ),
-                OnCompleteListener {
-                    if (it.isSuccessful) {
-                        Log.d(TAG, "isValidData: group crated")
-                    } else {
-                        Log.d(TAG, "isValidData: failed ${it.exception?.localizedMessage}")
-                    }
-                })
-        } else {
-            Log.d(TAG, "isValidData: empty fields")
 
-        }
+    var list = MutableLiveData<List<Group>>()
 
+
+    fun getGroups(){
+        Log.d(TAG, "getGroups: started")
+        GroupDao.getAllGroups(OnCompleteListener {
+            val list = mutableListOf<Group>()
+            if (it.isSuccessful) {
+                Log.d(TAG, "getGroups: task succeed")
+                for (document in it.result!!.documents) {
+                    val group = document.toObject(Group::class.java)
+
+
+                    Log.d(TAG, "getGroups: ${document}")
+                    if (group == null) continue
+                    list.add(group)
+                }
+                this.list.value = list
+                Log.d(TAG, "getGroups: live data list size ${(this.list.value as MutableList<Group>).size}")
+                Log.d(TAG, "getGroups:  list size ${list.size}")
+            }
+
+        })
     }
 
-
-    fun cancel() {
-        Log.d(TAG, "cancel: ")
-        cancelClicked.value = true
-    }
-
-    fun createNewGroup(group: Group, onCompleteListener: OnCompleteListener<DocumentReference>) {
-        GroupDao.addGroupToDatabase(group, onCompleteListener)
-    }
 
     fun logOut() {
         auth.signOut()
@@ -54,7 +50,4 @@ class HomeActivityViewModel:BaseViewModel<Navigator>() {
 
     }
 
-    fun isValidData(): Boolean {
-        return (!name.value.isNullOrBlank() && !desc.get().isNullOrBlank())
-    }
 }

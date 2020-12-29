@@ -34,9 +34,7 @@ class RegisterActivity : BaseActivity<ActivityRegisterBinding,RegisterViewModel>
         return R.layout.activity_register
     }
 
-    override fun initializeViewModel(): RegisterViewModel {
-        return ViewModelProvider(this).get(RegisterViewModel::class.java)
-    }
+    override fun initializeViewModel()=RegisterViewModel::class.java
 
     override fun openLoginActivity() {
         val loginIntent = Intent(this,LoginActivity::class.java)
