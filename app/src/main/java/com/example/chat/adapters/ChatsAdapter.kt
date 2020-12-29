@@ -9,9 +9,12 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.example.chat.R
 import com.example.chat.databinding.ChatItemBinding
+
 import com.example.chat.databinding.GroupItemBinding
 import com.example.chat.onlineDatabase.group.Group
 import com.example.chat.util.ChatModel
+
+
 
 class ChatsAdapter(var list:List<Group>?):RecyclerView.Adapter<ChatsAdapter.ViewHolder>() {
     private val TAG = "ChatsAdapter"
@@ -40,12 +43,14 @@ class ChatsAdapter(var list:List<Group>?):RecyclerView.Adapter<ChatsAdapter.View
         notifyDataSetChanged()
         Log.d(TAG, "changeData: new list size : ${list.size} ")
     }
+
     class ViewHolder(private val binding:GroupItemBinding):RecyclerView.ViewHolder(binding.root){
 
         fun bind(group: Group?){
             Log.d("ChatsAdapter", "bind: ")
             binding.group = group
             binding.invalidateAll()
+
         }
 
     }

@@ -74,12 +74,14 @@ class HomeActivity : BaseActivity<ActivityHomeBinding, HomeActivityViewModel>(),
 
     }
     fun newChat(item: MenuItem){
+
         Toast.makeText(this,"new Chat",Toast.LENGTH_LONG).show()
+
     }
 
     fun logout(item: MenuItem){
         viewModel.logOut()
-        openLogin()
+
     }
 
     override fun openLogin() {

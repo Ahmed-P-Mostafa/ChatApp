@@ -50,4 +50,7 @@ class HomeActivityViewModel:BaseViewModel<Navigator>() {
 
     }
 
+    fun goToChat() {
+        navigator?.openChat()
+    }
 }
