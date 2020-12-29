@@ -16,12 +16,8 @@ import com.example.chat.base.BaseActivity
 import com.example.chat.databinding.ActivityHomeBinding
 import com.example.chat.ui.chatThread.ChatThreadActivity
 import com.example.chat.onlineDatabase.group.Group
-import com.example.chat.ui.chatThread.ChatThreadActivity
 import com.example.chat.ui.login.LoginActivity
 import com.example.chat.ui.newGroup.NewGroupActivity
-import com.example.chat.util.ChatModel
-import com.example.chat.ui.newGroup.NewGroupActivity
-import com.example.chat.util.ChatModel
 import com.example.chat.util.Constants
 
 class HomeActivity : BaseActivity<ActivityHomeBinding, HomeActivityViewModel>(),Navigator {
