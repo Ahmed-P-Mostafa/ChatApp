@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+        <variable
+            name="group"
+            type="com.example.chat.onlineDatabase.group.Group" />
+
+    </data>
+<androidx.cardview.widget.CardView
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:elevation="20dp"
+    app:cardElevation="20dp"
+    android:layout_margin="4dp"
+    android:outlineSpotShadowColor="@android:color/white">
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:padding="8dp">
+        <TextView
+            android:id="@+id/name_textView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/colorPrimary"
+            android:textSize="28sp"
+            android:text="@{group.name}"/>
+        <TextView
+            android:id="@+id/desc_textView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="#7C7B7B"
+            android:textSize="20sp"
+            android:text="@{group.desc}"/>
+
+    </LinearLayout>
+</androidx.cardview.widget.CardView>
+
+</layout>

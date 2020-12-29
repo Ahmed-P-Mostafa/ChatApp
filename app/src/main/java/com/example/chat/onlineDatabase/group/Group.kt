@@ -1,3 +1,10 @@
 package com.example.chat.onlineDatabase.group
 
-data class Group(val picture: String? = null, val id: String?=null, val name: String, val desc: String? = null)
+import java.io.Serializable
+
+data class Group(val picture: String? = null,
+                   var id: String?=null,
+                   var desc: String? = null,
+                   var name: String? = null
+
+  ):Serializable

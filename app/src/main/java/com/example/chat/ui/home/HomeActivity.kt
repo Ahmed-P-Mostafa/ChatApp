@@ -8,47 +8,52 @@ import android.view.Menu
 import android.view.MenuInflater
 import android.view.MenuItem
 import android.widget.Toast
-import androidx.databinding.Observable
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.example.chat.R
 import com.example.chat.adapters.ChatsAdapter
 import com.example.chat.base.BaseActivity
 import com.example.chat.databinding.ActivityHomeBinding
-import com.example.chat.ui.chat.ChatActivity
+import com.example.chat.ui.chatThread.ChatThreadActivity
+import com.example.chat.onlineDatabase.group.Group
 import com.example.chat.ui.login.LoginActivity
-import java.util.*
+import com.example.chat.ui.newGroup.NewGroupActivity
+import com.example.chat.util.Constants
 
 class HomeActivity : BaseActivity<ActivityHomeBinding, HomeActivityViewModel>(),Navigator {
     private  val TAG = "HomeActivity"
-    lateinit var adapter :ChatsAdapter
-    var newGroupDialog : AlertDialog?=null
+    private var adapter = ChatsAdapter(null)
+
+    override fun onStart() {
+        super.onStart()
+        viewModel.getGroups()
+        Log.d(TAG, "onStart: ")
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        Log.d(TAG, "onCreate: ")
+        dataBinding.vm = viewModel
         viewModel.navigator = this
-        val list = listOf<ChatModel>()
-        adapter = ChatsAdapter(list)
+        dataBinding.chatsRecyclerView.adapter = adapter
+        observers()
+        adapter.onItemClickListener(object : ChatsAdapter.IOnItemClickListerner {
+            override fun onItemClick(position: Int, group: Group) {
+                super.onItemClick(position, group)
+                openThread(group)
 
+            }
 
-        dataBinding.apply {
-
-            vm = viewModel
-            chatsRecyclerView.adapter = adapter
-
-            viewModel.cancelClicked.observe(this@HomeActivity, Observer {
-                Log.d(TAG, "onCreate: cancel clicked")
-                newGroupDialog?.dismiss()
-            })
-        }
-        viewModel.name.observe(this, Observer {
-            Log.d(TAG, "onCreate: $it")
         })
 
 
 
     }
+    fun newGroup(item: MenuItem){
+      val intent = Intent(this, NewGroupActivity::class.java)
+        startActivity(intent)
 
+    }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         val inflater :MenuInflater = menuInflater
@@ -62,20 +67,18 @@ class HomeActivity : BaseActivity<ActivityHomeBinding, HomeActivityViewModel>(),
         return R.layout.activity_home
     }
 
-    override fun initializeViewModel(): HomeActivityViewModel {
-        return ViewModelProvider(this).get(HomeActivityViewModel::class.java)
-    }
+    override fun initializeViewModel()=HomeActivityViewModel::class.java
 
     fun settings(item: MenuItem) {
+        Toast.makeText(this,"Settings",Toast.LENGTH_LONG).show()
 
     }
     fun newChat(item: MenuItem){
-        viewModel.goToChat()
-    }
-    fun newGroup(item: MenuItem){
-        newGroupDialog = AlertDialog.Builder(this).setView(layoutInflater.inflate(R.layout.new_group_dialog,null)).show()
+
+        Toast.makeText(this,"new Chat",Toast.LENGTH_LONG).show()
 
     }
+
     fun logout(item: MenuItem){
         viewModel.logOut()
 
@@ -86,8 +89,18 @@ class HomeActivity : BaseActivity<ActivityHomeBinding, HomeActivityViewModel>(),
         startActivity(homeIntent)
     }
 
-    override fun openChat() {
-        val chatIntent = Intent(this,ChatActivity::class.java)
-        startActivity(chatIntent)
+
+
+    fun observers(){
+        viewModel.list.observe(this, Observer {
+            Log.d(TAG, "onCreate: list size : ${it.size}")
+            adapter.changeData(it)
+        })
+    }
+
+    override fun openThread(group:Group) {
+        val intent = Intent(this, ChatThreadActivity::class.java)
+        intent.putExtra(Constants.GROUP_EXTRA,group)
+        startActivity(intent)
     }
 }

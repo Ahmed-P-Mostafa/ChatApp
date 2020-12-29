@@ -8,6 +8,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
 import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProvider
 
 abstract class BaseActivity<DB:ViewDataBinding,VM:BaseViewModel<*>> :MyApplication() {
 
@@ -20,7 +21,7 @@ abstract class BaseActivity<DB:ViewDataBinding,VM:BaseViewModel<*>> :MyApplicati
         super.onCreate(savedInstanceState)
 
         dataBinding = DataBindingUtil.setContentView(this,getLayoutId())
-        viewModel = initializeViewModel()
+        viewModel = ViewModelProvider(this).get(initializeViewModel())
 
         viewModel.dialog.observe(this, Observer {
             showDialog(title = it.title,message = it.message,posButton = it.posButton ,posAction = it.posAction,negButton = it
@@ -41,7 +42,7 @@ abstract class BaseActivity<DB:ViewDataBinding,VM:BaseViewModel<*>> :MyApplicati
 
     }
     abstract fun getLayoutId():Int
-    abstract fun initializeViewModel():VM
+     abstract fun initializeViewModel():Class<VM>
 
     fun showDialog(title :String? = null, message :String? = null, posButton :String? = null,
                    negButton :String? = null, posAction:DialogInterface.OnClickListener?= null

@@ -4,6 +4,7 @@ import android.util.Log
 import android.util.Patterns
 import androidx.lifecycle.MutableLiveData
 import com.example.chat.base.BaseViewModel
+import com.example.chat.util.Constants
 import com.example.chat.util.CustomMessage
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.android.gms.tasks.OnCompleteListener
@@ -53,6 +54,7 @@ class LoginViewModel:BaseViewModel<Navigator>() {
                 if (it.isSuccessful) {
                     Log.d(TAG, "logIn: login is successful")
                     val user: FirebaseUser? = auth.currentUser
+                    Constants.USER = auth.currentUser!!
                     Log.d(TAG, "logIn: ${user?.uid}")
                     // update UI
                     dialog.value= CustomMessage(message = "Login Successfully",posButton = "ok",posAction =  { dialogInterface, i ->

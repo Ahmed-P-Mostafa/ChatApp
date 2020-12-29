@@ -16,9 +16,10 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+        <activity android:name=".ui.chatThread.ChatThreadActivity"></activity>
         <activity
-            android:name=".ui.chat.ChatActivity"
-            android:parentActivityName=".ui.home.HomeActivity" />
+            android:name=".ui.newGroup.NewGroupActivity"
+            android:parentActivityName=".ui.home.HomeActivity"></activity>
 
         <meta-data
             android:name="com.google.android.gms.wallet.api.enabled"

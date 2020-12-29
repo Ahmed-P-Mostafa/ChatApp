@@ -56,9 +56,7 @@ class LoginActivity : BaseActivity<ActivityLoginBinding, LoginViewModel>(),Navig
         return R.layout.activity_login
     }
 
-    override fun initializeViewModel(): LoginViewModel {
-        return ViewModelProvider(this).get(LoginViewModel::class.java)
-    }
+    override fun initializeViewModel()=LoginViewModel::class.java
     private fun isUserLoggedIn(){
 
         viewModel.isSignedIn()
@@ -119,6 +117,7 @@ class LoginActivity : BaseActivity<ActivityLoginBinding, LoginViewModel>(),Navig
         Log.d(TAG, "openHoome: ")
         val homeIntent = Intent(this,HomeActivity::class.java)
         startActivity(homeIntent)
+        finish()
     }
 }
 
