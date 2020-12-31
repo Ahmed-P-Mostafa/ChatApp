@@ -1,4 +1,4 @@
-package com.example.chat.onlineDatabase.group
+package com.example.chat.onlineDatabase.models
 
 import java.io.Serializable
 

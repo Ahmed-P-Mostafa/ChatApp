@@ -3,16 +3,12 @@ package com.example.chat.adapters
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import android.widget.AdapterView
 import androidx.databinding.DataBindingUtil
-import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.example.chat.R
-import com.example.chat.databinding.ChatItemBinding
 
 import com.example.chat.databinding.GroupItemBinding
-import com.example.chat.onlineDatabase.group.Group
-import com.example.chat.util.ChatModel
+import com.example.chat.onlineDatabase.models.Group
 
 
 
@@ -55,7 +51,7 @@ class ChatsAdapter(var list:List<Group>?):RecyclerView.Adapter<ChatsAdapter.View
 
     }
     interface IOnItemClickListerner{
-        fun onItemClick(position:Int,group:Group){}
+        fun onItemClick(position:Int,group: Group){}
     }
     var onGroupClickListener : IOnItemClickListerner?=null
 

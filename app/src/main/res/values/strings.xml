@@ -23,4 +23,6 @@
     <string name="cancel">Cancel</string>
 
     <string name="type_a_message">Type a message</string>
+    <string name="hint_enter_a_message">Type a message...</string>
+    <string name="login_with_google">login with google</string>
 </resources>

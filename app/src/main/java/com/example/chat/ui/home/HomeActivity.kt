@@ -1,6 +1,5 @@
 package com.example.chat.ui.home
 
-import android.app.AlertDialog
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
@@ -9,16 +8,16 @@ import android.view.MenuInflater
 import android.view.MenuItem
 import android.widget.Toast
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProvider
 import com.example.chat.R
 import com.example.chat.adapters.ChatsAdapter
 import com.example.chat.base.BaseActivity
 import com.example.chat.databinding.ActivityHomeBinding
 import com.example.chat.ui.chatThread.ChatThreadActivity
-import com.example.chat.onlineDatabase.group.Group
+import com.example.chat.onlineDatabase.models.Group
 import com.example.chat.ui.login.LoginActivity
 import com.example.chat.ui.newGroup.NewGroupActivity
 import com.example.chat.util.Constants
+import kotlin.math.log
 
 class HomeActivity : BaseActivity<ActivityHomeBinding, HomeActivityViewModel>(),Navigator {
     private  val TAG = "HomeActivity"
@@ -33,6 +32,7 @@ class HomeActivity : BaseActivity<ActivityHomeBinding, HomeActivityViewModel>(),
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         Log.d(TAG, "onCreate: ")
+        Log.e(TAG, "onCreate: ${Constants.USER.uid}", )
         dataBinding.vm = viewModel
         viewModel.navigator = this
         dataBinding.chatsRecyclerView.adapter = adapter
@@ -79,8 +79,8 @@ class HomeActivity : BaseActivity<ActivityHomeBinding, HomeActivityViewModel>(),
 
     }
 
-    fun logout(item: MenuItem){
-        viewModel.logOut()
+     fun logout(item: MenuItem){
+        viewModel.logOut(this)
 
     }
 
@@ -98,9 +98,10 @@ class HomeActivity : BaseActivity<ActivityHomeBinding, HomeActivityViewModel>(),
         })
     }
 
-    override fun openThread(group:Group) {
+    override fun openThread(group: Group) {
         val intent = Intent(this, ChatThreadActivity::class.java)
         intent.putExtra(Constants.GROUP_EXTRA,group)
         startActivity(intent)
     }
+
 }

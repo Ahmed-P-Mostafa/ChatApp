@@ -1,19 +1,16 @@
 package com.example.chat.ui.home
 
+import android.content.Context
+import android.content.SharedPreferences
 import android.util.Log
-import android.util.Patterns
-import android.widget.Toast
-import androidx.databinding.ObservableField
 import androidx.lifecycle.MutableLiveData
-import com.example.chat.adapters.ChatsAdapter
 import com.example.chat.base.BaseViewModel
-import com.example.chat.onlineDatabase.OnlineDatabase
-import com.example.chat.onlineDatabase.group.Group
-import com.example.chat.onlineDatabase.group.GroupDao
-import com.example.chat.util.ChatModel
+import com.example.chat.base.MyApplication
+import com.example.chat.onlineDatabase.models.Group
+import com.example.chat.onlineDatabase.dao.GroupDao
+import com.example.chat.util.Constants
 import com.google.android.gms.tasks.OnCompleteListener
-import com.google.android.gms.tasks.OnSuccessListener
-import com.google.firebase.firestore.DocumentReference
+import com.google.firebase.auth.FirebaseUser
 
 class HomeActivityViewModel:BaseViewModel<Navigator>() {
     private val TAG = "HomeActivityViewModel"
@@ -44,13 +41,32 @@ class HomeActivityViewModel:BaseViewModel<Navigator>() {
     }
 
 
-    fun logOut() {
+     fun logOut(context: Context) {
         auth.signOut()
+         deleteUserToSharedPreferences(context)
+       /* suspend {
+            MyApplication().removeUserFromDataStore()
+        }*/
+
         navigator?.openLogin()
 
     }
+    fun deleteUserToSharedPreferences(context: Context){
+        // add Firebase user to shared preferences to validate on it if the user is signed in or logged out
 
-    fun goToChat() {
-        navigator?.openChat()
+        val sp = context.getSharedPreferences(
+            Constants.USER_SHARED_PREFERENCES_FILE_NAME,
+            Context.MODE_PRIVATE
+        )
+        val editor : SharedPreferences.Editor = sp.edit()
+        editor.putString(Constants.USER_NAME_KEY,Constants.NULL_VALUE)
+        editor.putString(Constants.USER_ID_KEY,Constants.NULL_VALUE)
+        editor.putString(Constants.USER_EMAIL_KEY,Constants.NULL_VALUE)
+        editor.putString(Constants.USER_PHONE_KEY,Constants.NULL_VALUE)
+        editor.putString(Constants.USER_PHOTO_KEY,Constants.NULL_VALUE)
+        editor.putBoolean(Constants.IS_USER_SIGNED_IN,false)
+        editor.apply()
     }
+
+
 }
