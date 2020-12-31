@@ -1,13 +1,11 @@
 package com.example.chat.ui.login
 
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.View
-import android.widget.Toast
 import androidx.core.widget.addTextChangedListener
-import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import com.example.chat.R
 import com.example.chat.base.BaseActivity
@@ -92,7 +90,7 @@ class LoginActivity : BaseActivity<ActivityLoginBinding, LoginViewModel>(),Navig
                 Log.d(TAG, "onActivityResult: fireBaseAuthWithGoogle ${account.id}")
                 Log.d(TAG, "onActivityResult: ")
 
-                viewModel.firebaseAuthWithGoogle(account.idToken!!)
+                viewModel.firebaseAuthWithGoogle(this,account.idToken!!)
 
             }catch (e: ApiException){
                 Log.d(TAG, "onActivityResult: catch error ${e.localizedMessage}")
@@ -102,10 +100,13 @@ class LoginActivity : BaseActivity<ActivityLoginBinding, LoginViewModel>(),Navig
     }
 
     override fun openHome() {
-        Log.d(TAG, "openHoome: ")
+        Log.d(TAG, "openHome: ")
         val homeIntent = Intent(this,HomeActivity::class.java)
         startActivity(homeIntent)
         finish()
+    }
+    fun login(view: View) {
+        viewModel.logIn(this)
     }
 }
 

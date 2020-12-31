@@ -2,6 +2,7 @@ package com.example.chat.base
 
 import android.app.ProgressDialog
 import android.content.DialogInterface
+import android.content.SharedPreferences
 import android.os.Bundle
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
@@ -9,6 +10,7 @@ import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import com.example.chat.util.Constants
 
 abstract class BaseActivity<DB:ViewDataBinding,VM:BaseViewModel<*>> :MyApplication() {
 
@@ -17,8 +19,12 @@ abstract class BaseActivity<DB:ViewDataBinding,VM:BaseViewModel<*>> :MyApplicati
     var dialog : AlertDialog? = null
     var loader :ProgressDialog? = null
     var message:AlertDialog? = null
-    override fun onCreate(savedInstanceState: Bundle?) {
+    lateinit var user : SharedPreferences
+        override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+         user = getSharedPreferences(Constants.USER_SHARED_PREFERENCES_FILE_NAME, MODE_PRIVATE)
+
 
         dataBinding = DataBindingUtil.setContentView(this,getLayoutId())
         viewModel = ViewModelProvider(this).get(initializeViewModel())

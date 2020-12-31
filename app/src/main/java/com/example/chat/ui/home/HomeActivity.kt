@@ -32,11 +32,11 @@ class HomeActivity : BaseActivity<ActivityHomeBinding, HomeActivityViewModel>(),
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         Log.d(TAG, "onCreate: ")
-        Log.e(TAG, "onCreate: ${Constants.USER.uid}", )
         dataBinding.vm = viewModel
         viewModel.navigator = this
         dataBinding.chatsRecyclerView.adapter = adapter
         observers()
+        log()
         adapter.onItemClickListener(object : ChatsAdapter.IOnItemClickListerner {
             override fun onItemClick(position: Int, group: Group) {
                 super.onItemClick(position, group)
@@ -102,6 +102,13 @@ class HomeActivity : BaseActivity<ActivityHomeBinding, HomeActivityViewModel>(),
         val intent = Intent(this, ChatThreadActivity::class.java)
         intent.putExtra(Constants.GROUP_EXTRA,group)
         startActivity(intent)
+    }
+    fun log(){
+        val user = viewModel.getUserFromSharedPreferences(this)
+        Log.d(TAG, "log: ${user.id}")
+        Log.d(TAG, "log: ${user.name}")
+        Log.d(TAG, "log: ${user.avatar}")
+        Log.d(TAG, "log: ${user.email}")
     }
 
 }
