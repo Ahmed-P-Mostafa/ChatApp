@@ -15,10 +15,16 @@ class ChatThreadActivity : BaseActivity<ActivityChatThreadBinding, ChatThreadVie
 
 
     lateinit var adapter: MessagesListAdapter<Message>
+    lateinit var holderConfig :MessagesListAdapter.HoldersConfig
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        adapter = MessagesListAdapter<Message>(user.getString(Constants.USER_ID_KEY, Constants.NULL_VALUE), null)
+
+        holderConfig = MessagesListAdapter.HoldersConfig()
+        holderConfig.setIncomingLayout(R.layout.incoming_message_item)
+        holderConfig.setOutcomingLayout(R.layout.outcoming_message_item)
+        adapter = MessagesListAdapter<Message>(user.getString(Constants.USER_ID_KEY, Constants.NULL_VALUE),holderConfig, null)
+
 
         dataBinding.vm = viewModel
         viewModel.navigator =this

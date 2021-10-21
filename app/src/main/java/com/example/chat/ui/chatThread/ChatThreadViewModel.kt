@@ -36,7 +36,6 @@ class ChatThreadViewModel : BaseViewModel<Navigator>() {
 
                 }
             }
-
         })
     }
 
