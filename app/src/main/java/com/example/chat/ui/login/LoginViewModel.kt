@@ -1,14 +1,13 @@
 package com.example.chat.ui.login
 
+import android.content.Context
 import android.util.Log
 import android.util.Patterns
-import androidx.lifecycle.MutableLiveData
 import com.example.chat.base.BaseViewModel
 import com.example.chat.util.Constants
 import com.example.chat.util.CustomMessage
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.android.gms.tasks.OnCompleteListener
-import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.auth.GoogleAuthProvider
 import kotlinx.coroutines.flow.Flow
@@ -19,7 +18,6 @@ class LoginViewModel:BaseViewModel<Navigator>() {
     private val TAG = "fireBase LoginViewModel"
 
 
-    var isUserLoggedIn = MutableLiveData<Boolean>()
     private val webClientId = "611522890597-e6dc2r9ld6s6vj014pn36camn5aoil3l.apps.googleusercontent.com"
     private val webClientSecret = "7hDV_hLKjDHwUXSiQJ59-Gav"
 
@@ -38,12 +36,12 @@ class LoginViewModel:BaseViewModel<Navigator>() {
 
 
 
-    fun isSignedIn(){
+    /*fun isSignedIn(){
 
         isUserLoggedIn.value = auth.currentUser != null
         //message.value=auth.currentUser?.email
-    }
-    fun logIn(){
+    }*/
+    fun logIn(context: Context) {
         loader.postValue(true)
 
         Log.d(TAG, "logIn: ")
@@ -52,9 +50,11 @@ class LoginViewModel:BaseViewModel<Navigator>() {
             OnCompleteListener {
                 loader.postValue(false)
                 if (it.isSuccessful) {
+                    saveUserToSharedPreferences(context,it.result?.user!!)
+
                     Log.d(TAG, "logIn: login is successful")
                     val user: FirebaseUser? = auth.currentUser
-                    Constants.USER = auth.currentUser!!
+                    //Constants.USER = auth.currentUser!!
                     Log.d(TAG, "logIn: ${user?.uid}")
                     // update UI
                     dialog.value= CustomMessage(message = "Login Successfully",posButton = "ok",posAction =  { dialogInterface, i ->
@@ -94,7 +94,7 @@ class LoginViewModel:BaseViewModel<Navigator>() {
 
 
     }
-    fun firebaseAuthWithGoogle(idToken:String){
+    fun firebaseAuthWithGoogle(context: Context,idToken:String){
         loader.postValue(true)
         Log.d(TAG, "firebaseAuthWithGoogle: ")
         val credential = GoogleAuthProvider.getCredential(idToken,null)
@@ -102,6 +102,10 @@ class LoginViewModel:BaseViewModel<Navigator>() {
             loader.postValue(false)
             Log.d(TAG, "firebaseAuthWithGoogle: authorization completed")
             if (it.isSuccessful){
+
+                saveUserToSharedPreferences(context,it.result?.user!!)
+
+                Constants.USER= it.result?.user!!
                 Log.d(TAG, "firebaseAuthWithGoogle: authorization successful")
                 Log.d(TAG, "firebaseAuthWithGoogle: ${auth.currentUser?.email}")
                 dialog.value = CustomMessage(message = "login Successfully",posButton = "ok",posAction ={ dialogInterface, i ->
@@ -116,6 +120,7 @@ class LoginViewModel:BaseViewModel<Navigator>() {
             Log.d(TAG, "firebaseAuthWithGoogle: authorization failed")
         }
     }
+
 
 
     

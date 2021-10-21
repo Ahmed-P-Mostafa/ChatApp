@@ -6,12 +6,10 @@ import android.util.Patterns
 import androidx.databinding.ObservableField
 import androidx.lifecycle.MutableLiveData
 import com.example.chat.base.BaseViewModel
-import com.example.chat.onlineDatabase.user.User
-import com.example.chat.onlineDatabase.user.UserDao
+import com.example.chat.onlineDatabase.models.User
+import com.example.chat.onlineDatabase.dao.UserDao
 import com.google.android.gms.tasks.OnCompleteListener
-import com.google.android.gms.tasks.OnSuccessListener
 import com.example.chat.util.CustomMessage
-import com.google.firebase.auth.FirebaseAuth
 
 
 class RegisterViewModel :BaseViewModel<Navigator>() {
@@ -116,7 +114,7 @@ class RegisterViewModel :BaseViewModel<Navigator>() {
         navigator?.openLoginActivity()
 
     }
-    fun addUSerToDatabase(user:User,onCompleteListener: OnCompleteListener<Void>){
+    fun addUSerToDatabase(user: User, onCompleteListener: OnCompleteListener<Void>){
         UserDao.addUserToDatabse(user,onCompleteListener)
     }
 }

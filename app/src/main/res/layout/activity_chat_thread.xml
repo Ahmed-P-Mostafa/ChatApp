@@ -14,6 +14,27 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         tools:context=".ui.chatThread.ChatThreadActivity">
+        <com.stfalcon.chatkit.messages.MessagesList
+            android:id="@+id/messagesList"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:orientation="vertical"
+
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toTopOf="@id/input"
+             />
+        <com.stfalcon.chatkit.messages.MessageInput
+            android:id="@+id/input"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:showAttachmentButton="true"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+
+            app:layout_constraintTop_toBottomOf="@id/messagesList"
+            app:inputHint="@string/hint_enter_a_message"/>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

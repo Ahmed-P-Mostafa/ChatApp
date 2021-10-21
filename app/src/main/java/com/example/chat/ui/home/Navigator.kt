@@ -1,9 +1,9 @@
 package com.example.chat.ui.home
 
-import com.example.chat.onlineDatabase.group.Group
+import com.example.chat.onlineDatabase.models.Group
 
 interface Navigator {
     fun openLogin()
-    fun openThread(group:Group)
+    fun openThread(group: Group)
 
 }

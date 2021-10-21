@@ -1,13 +1,11 @@
 package com.example.chat.ui.login
 
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.View
-import android.widget.Toast
 import androidx.core.widget.addTextChangedListener
-import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import com.example.chat.R
 import com.example.chat.base.BaseActivity
@@ -30,7 +28,7 @@ class LoginActivity : BaseActivity<ActivityLoginBinding, LoginViewModel>(),Navig
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         viewModel.navigator = this
-        isUserLoggedIn()
+
         dataBinding.vm = viewModel
 
         googleSignInClient = GoogleSignIn.getClient(this,viewModel.gso)
@@ -57,20 +55,7 @@ class LoginActivity : BaseActivity<ActivityLoginBinding, LoginViewModel>(),Navig
     }
 
     override fun initializeViewModel()=LoginViewModel::class.java
-    private fun isUserLoggedIn(){
 
-        viewModel.isSignedIn()
-        // validate if the user is logged in or not to switch between login or home activity
-        viewModel.isUserLoggedIn.observe(this, Observer {
-            if (it){
-                //Toast.makeText(this,"User Logged In",Toast.LENGTH_LONG).show()
-                openHome()
-            }else{
-                //Toast.makeText(this,"User Not Logged In",Toast.LENGTH_LONG).show()
-
-            }
-        })
-    }
 
     private fun View.enabled(value: Boolean) {
         if (value) {
@@ -95,7 +80,7 @@ class LoginActivity : BaseActivity<ActivityLoginBinding, LoginViewModel>(),Navig
         startActivityForResult(signInIntent,RC_SIGN_IN)
     }
 
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+    override  fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         if (requestCode == RC_SIGN_IN){
             val task = GoogleSignIn.getSignedInAccountFromIntent(data)
@@ -104,7 +89,8 @@ class LoginActivity : BaseActivity<ActivityLoginBinding, LoginViewModel>(),Navig
                 val account : GoogleSignInAccount = task.getResult(ApiException::class.java)!!
                 Log.d(TAG, "onActivityResult: fireBaseAuthWithGoogle ${account.id}")
                 Log.d(TAG, "onActivityResult: ")
-                viewModel.firebaseAuthWithGoogle(account.idToken!!)
+
+                viewModel.firebaseAuthWithGoogle(this,account.idToken!!)
 
             }catch (e: ApiException){
                 Log.d(TAG, "onActivityResult: catch error ${e.localizedMessage}")
@@ -114,10 +100,13 @@ class LoginActivity : BaseActivity<ActivityLoginBinding, LoginViewModel>(),Navig
     }
 
     override fun openHome() {
-        Log.d(TAG, "openHoome: ")
+        Log.d(TAG, "openHome: ")
         val homeIntent = Intent(this,HomeActivity::class.java)
         startActivity(homeIntent)
         finish()
+    }
+    fun login(view: View) {
+        viewModel.logIn(this)
     }
 }
 

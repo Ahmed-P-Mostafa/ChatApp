@@ -4,11 +4,9 @@ import android.util.Log
 import androidx.databinding.ObservableField
 import androidx.lifecycle.MutableLiveData
 import com.example.chat.base.BaseViewModel
-import com.example.chat.onlineDatabase.group.Group
-import com.example.chat.onlineDatabase.group.GroupDao
+import com.example.chat.onlineDatabase.models.Group
+import com.example.chat.onlineDatabase.dao.GroupDao
 import com.google.android.gms.tasks.OnCompleteListener
-import com.google.firebase.firestore.DocumentReference
-import com.google.firebase.firestore.ktx.getField
 
 class NewGroupViewModel:BaseViewModel<Navigator>() {
     private val TAG = "NewGroupViewModel"
@@ -19,7 +17,8 @@ class NewGroupViewModel:BaseViewModel<Navigator>() {
     fun save() {
         Log.d(TAG, "save: ")
         if (isValidData()) {
-            createNewGroup(Group(
+            createNewGroup(
+                Group(
                 name = name.value.toString(),
                 desc = desc.get().toString()
             ), OnCompleteListener {
