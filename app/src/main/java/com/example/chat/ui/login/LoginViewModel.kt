@@ -18,8 +18,7 @@ class LoginViewModel:BaseViewModel<Navigator>() {
     private val TAG = "fireBase LoginViewModel"
 
 
-    private val webClientId = "611522890597-e6dc2r9ld6s6vj014pn36camn5aoil3l.apps.googleusercontent.com"
-    private val webClientSecret = "7hDV_hLKjDHwUXSiQJ59-Gav"
+    private val webClientId = "Your_Web_Client_ID"
 
 
     // Configure Google Sign In
